@@ -51,7 +51,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '广场', icon: 'dashboard' }
     }]
   },
 
@@ -60,19 +60,37 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    meta: { title: '全部文件', icon: 'example' },
     children: [
       {
         path: 'table',
         name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        component: () => import('@/views/all/image'),
+        meta: { title: '图片', icon: 'table', type: 'all' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'document',
+        name: 'document',
+        component: () => import('@/views/all/other'),
+        meta: { title: '文档', icon: 'tree', type: 'document' }
+      },
+      {
+        path: 'video',
+        name: 'video',
+        component: () => import('@/views/all/other'),
+        meta: { title: '视频', icon: 'tree', type: 'video' }
+      },
+      {
+        path: 'music',
+        name: 'music',
+        component: () => import('@/views/all/other'),
+        meta: { title: '音乐', icon: 'tree', type: 'music' }
+      },
+      {
+        path: 'other',
+        name: 'other',
+        component: () => import('@/views/all/other'),
+        meta: { title: '其他', icon: 'tree', type: 'other' }
       }
     ]
   },
