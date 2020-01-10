@@ -17,10 +17,10 @@ export function parseTime(time, cFormat) {
   if (typeof time === 'object') {
     date = time
   } else {
-    if ((typeof time === 'string') && (/^[0-9]+$/.test(time))) {
+    if (typeof time === 'string' && /^[0-9]+$/.test(time)) {
       time = parseInt(time)
     }
-    if ((typeof time === 'number') && (time.toString().length === 10)) {
+    if (typeof time === 'number' && time.toString().length === 10) {
       time = time * 1000
     }
     date = new Date(time)
@@ -37,7 +37,9 @@ export function parseTime(time, cFormat) {
   const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
     const value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     return value.toString().padStart(2, '0')
   })
   return time_str
@@ -104,4 +106,36 @@ export function param2Obj(url) {
         .replace(/\+/g, ' ') +
       '"}'
   )
+}
+
+/** this.onDeviceExport({ params }).then(rs => {
+        // 请求失败返回的是json格式
+        if (rs.headers['content-type'] !== 'application/octet-stream') {
+          return false
+        }
+        const fileName = rs.headers['content-disposition'].split('=').pop()
+        downLoadFile(fileName, rs.data)
+        this.$toast.center(`已成功导出当前列表下的所有设备信息！`)
+      }) **/
+
+export function downLoadFile(fileName, data) {
+  // 兼容ie11,edge
+  if (window.navigator.msSaveOrOpenBlob) {
+    try {
+      const blobObject = new Blob([data])
+      window.navigator.msSaveOrOpenBlob(blobObject, decodeURI(fileName))
+    } catch (e) {
+      console.log(e)
+    }
+  } else {
+    const url = URL.createObjectURL(data)
+    const link = document.createElement('a')
+    link.style.display = 'none'
+    link.href = url
+    link.setAttribute('download', decodeURI(fileName))
+    document.body.appendChild(link)
+    link.click()
+    URL.revokeObjectURL(link.href)
+    document.body.removeChild(link)
+  }
 }

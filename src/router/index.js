@@ -47,12 +47,14 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: '广场', icon: 'dashboard' }
-    }]
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: '广场', icon: 'dashboard' }
+      }
+    ]
   },
 
   {
@@ -60,13 +62,19 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/example/table',
     name: 'Example',
-    meta: { title: '全部文件', icon: 'example' },
+    meta: { title: '资源', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
+        path: 'all',
+        name: 'all',
+        component: () => import('@/views/all/other'),
+        meta: { title: '全部文件', icon: 'table', type: 'all' }
+      },
+      {
+        path: 'image',
+        name: 'image',
         component: () => import('@/views/all/image'),
-        meta: { title: '图片', icon: 'table', type: 'all' }
+        meta: { title: '图片', icon: 'table', type: 'image' }
       },
       {
         path: 'document',
@@ -138,13 +146,15 @@ export const constantRoutes = [
             children: [
               {
                 path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
+                component: () =>
+                  import('@/views/nested/menu1/menu1-2/menu1-2-1'),
                 name: 'Menu1-2-1',
                 meta: { title: 'Menu1-2-1' }
               },
               {
                 path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
+                component: () =>
+                  import('@/views/nested/menu1/menu1-2/menu1-2-2'),
                 name: 'Menu1-2-2',
                 meta: { title: 'Menu1-2-2' }
               }
@@ -181,11 +191,12 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 
