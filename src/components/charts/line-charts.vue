@@ -150,8 +150,9 @@ export default {
             symbol: 'circle',
             showSymbol: true,
             symbolSize: 7,
-            hoverAnimation: false,
-            animation: false,
+            hoverAnimation: true,
+            animation: true,
+            smooth: true,
             itemStyle: {
               normal: {
                 color: '#fff',
@@ -162,6 +163,25 @@ export default {
                   width: 2,
                   type: 'solid',
                   color: '#099BFF'
+                }
+              }
+            },
+            areaStyle: {
+              normal: {
+                color: {
+                  type: 'linear', // 设置线性渐变
+                  x: 0,
+                  y: 0,
+                  x2: 0,
+                  y2: 1,
+                  colorStops: [{
+                    offset: 0,
+                    color: 'rgba(9, 155, 255, 0.15)'
+                  }, {
+                    offset: 1,
+                    color: 'rgba(9, 155, 255, 0)'
+                  }],
+                  globalCoord: false
                 }
               }
             }

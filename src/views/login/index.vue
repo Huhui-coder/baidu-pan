@@ -1,5 +1,9 @@
 <template>
   <div class="login-container">
+    <video autoplay="autoplay" muted="muted" volume="0" :poster="background.poster" loop="loop" class="section-background-video">
+      <source type="video/mp4" :src="background.video">
+    </video>
+    <div class="mask" />
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
@@ -73,6 +77,10 @@ export default {
       }
     }
     return {
+      background: {
+        poster: 'https://ccdn.goodq.top/caches/927a729d326a897a6e2f27a03c31ee07/aHR0cDovLzU3ZThlY2Y0MTE1NWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNy8wNi85OGIyZTYyYzgwOGRkNTdkMDA0MTUxNWVkNjk0NDg5YXByZXZpZXdfaW1hZ2UucG5n.png',
+        video: 'https://ccdn.goodq.top/caches/927a729d326a897a6e2f27a03c31ee07/aHR0cDovLzU3ZThlY2Y0MTE1NWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNy8wNi85OGIyZTYyYzgwOGRkNTdkMDA0MTUxNWVkNjk0NDg5YS5tcDQ_p_p100_p_3D.mp4'
+      },
       loginForm: {
         username: 'admin',
         password: '111111'
@@ -141,6 +149,20 @@ $cursor: #fff;
 
 /* reset element-ui css */
 .login-container {
+  box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    .section-background-video{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position:center center;
+    }
+    .mask{ width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); position: absolute; left: 0; top: 0; }
   .el-input {
     display: inline-block;
     height: 47px;
