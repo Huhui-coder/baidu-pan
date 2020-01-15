@@ -1,4 +1,3 @@
-import request from '@/utils/request'
 
 const module = {
   namespaced: true,
@@ -25,7 +24,7 @@ const module = {
     async uploadFile({ state, commit }, file) {
       try {
         const res = await request
-          .post(`/file/saveOrUpdateFile`, file, {
+          .post(`/file/saveFile`, file, {
             timeout: 120000,
             'Content-Type': 'multipart/form-data'
           })

@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
 import tabList from '@/components/tabList/index'
 import videoModel from '@/components/modal/video'
 import musicModel from '@/components/modal/music'
@@ -93,10 +92,10 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
-      })
+      // getList().then(response => {
+      //   this.list = response.data.items
+      //   this.listLoading = false
+      // })
     },
     fetch() {
       const mapper = {

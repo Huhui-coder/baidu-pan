@@ -12,7 +12,7 @@ import store from './store'
 import router from './router'
 
 import '@/icons' // icon
-import '@/permission' // permission control
+// import '@/permission' // permission control
 import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 Vue.use(Viewer)
@@ -21,6 +21,8 @@ import 'video.js/dist/video-js.css'
 Vue.use(VideoPlayer)
 import Aplayer from 'vue-aplayer'
 Vue.component('Aplayer', Aplayer)
+import api from "./http/index";
+Vue.use(api)
 
 /**
  * If you don't want to use mock-server
@@ -30,10 +32,6 @@ Vue.component('Aplayer', Aplayer)
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
-import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'production') {
-  mockXHR()
-}
 
 // set ElementUI lang to EN
 // 如果想要中文版 element-ui，按如下方式声明
