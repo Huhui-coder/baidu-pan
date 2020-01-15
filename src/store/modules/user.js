@@ -1,4 +1,6 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import axios from '@/utils/axios'
+
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
@@ -27,17 +29,19 @@ const mutations = {
 }
 
 const actions = {
-  // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
+  login ({ state, commit }, data) {
+    const { form } = data
     return new Promise((resolve, reject) => {
-      login({ userName: username.trim(), userPwd: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      }).catch(error => {
-        reject(error)
+      axios.post('/login/userLogin', form).then(res => {
+        if (res.status === 200) {
+          commit('SET_TOKEN', data.token)
+          setToken(data.token)
+          resolve(Object.assign({ status: true }, res.data.data))
+        } else {
+          resolve({ status: false })
+        }
+      }).catch(err => {
+        reject(err)
       })
     })
   },

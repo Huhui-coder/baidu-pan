@@ -1,3 +1,4 @@
+import axios from '@/utils/axios'
 
 const module = {
   namespaced: true,
@@ -23,7 +24,7 @@ const module = {
     // 上传文件
     async uploadFile({ state, commit }, file) {
       try {
-        const res = await request
+        const res = await axios
           .post(`/file/saveFile`, file, {
             timeout: 120000,
             'Content-Type': 'multipart/form-data'
@@ -47,13 +48,13 @@ const module = {
     },
     // 修改文件
     async updateFile({ state, commit }, { id, file }) {
-      const res = await request.put(`/files/${id}`, file)
+      const res = await axios.put(`/files/${id}`, file)
       commit('updateFile', res.data)
     },
 
     // 删除文件
     async deleteFile({ state, commit }, body) { 
-      const res = await request.post(`/file/delFileById`, body)
+      const res = await axios.post(`/file/delFileById`, body)
       commit('updateFile', res.data)
       if (!res.data) {
         commit('$message', {
@@ -64,7 +65,7 @@ const module = {
     },
     // 查询文件列表文件
     async queryAllFile({ state, commit }, body) { 
-      const res = await request.post(`/file/queryAllFileDetail`, body)
+      const res = await axios.post(`/file/queryAllFileDetail`, body)
       commit('updateFile', res.data)
       if (!res.data) {
         commit('$message', {
@@ -75,7 +76,7 @@ const module = {
     },
     // 查询文件类型文件
     async queryFileType({ state, commit }, params) { 
-      const res = await request.get(`/file/queryAllFileDetail`, params)
+      const res = await axios.get(`/file/queryAllFileDetail`, params)
       commit('updateFile', res.data)
       if (!res.data) {
         commit('$message', {
