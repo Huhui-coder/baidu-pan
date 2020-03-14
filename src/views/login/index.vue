@@ -155,7 +155,7 @@ export default {
             userName: this.loginForm.username,
             userPwd: this.loginForm.password
           }
-          let res =  this.login(body)
+          const res = this.login(body)
           this.$router.push({ path: this.redirect || '/' })
         } else {
           console.log('error submit!!')

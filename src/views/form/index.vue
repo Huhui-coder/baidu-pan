@@ -52,8 +52,7 @@ import tabList from '@/components/tabList/index'
 import videoModel from '@/components/modal/video'
 import musicModel from '@/components/modal/music'
 import { mapActions, mapState } from 'vuex'
-import { downLoadFile} from '@/utils/index'
-
+import { downLoadFile } from '@/utils/index'
 
 export default {
   components: { tabList, videoModel, musicModel },
@@ -78,7 +77,7 @@ export default {
       music_url: '',
       showVideoModel: false,
       showMusicModel: false,
-      userId:localStorage.getItem('userId')
+      userId: localStorage.getItem('userId')
     }
   },
   computed: {
@@ -94,15 +93,15 @@ export default {
     this.fetch()
   },
   methods: {
-    ...mapActions('transh', ['featchTranshList','deleteTranshFile','callbackTranshFile']),
+    ...mapActions('transh', ['featchTranshList', 'deleteTranshFile', 'callbackTranshFile']),
 
     async fetchData() {
       this.listLoading = true
-      let body = {
-        userId:this.userId,
-        parentId:0
+      const body = {
+        userId: this.userId,
+        parentId: 0
       }
-      let res = await this.featchTranshList(body)
+      const res = await this.featchTranshList(body)
       console.log(res.data.data)
       this.list = res.data.data
       this.listLoading = false
@@ -131,20 +130,20 @@ export default {
       console.log(val)
       this.multipleSelection = val
     },
-   async  handleCallback(id) {
-      let body = {
-        userId:this.userId,
-        fileId:id
+    async  handleCallback(id) {
+      const body = {
+        userId: this.userId,
+        fileId: id
       }
-      let res = await this.callbackTranshFile(body)
+      const res = await this.callbackTranshFile(body)
       // window.location.href = `http://192.168.0.105:8080/upload-demo/file/downLoadFileDetail/${this.userId}/${id}`
     },
     async handleDelete(id) {
-      let body = {
-        userId:this.userId,
-        fileId:id
+      const body = {
+        userId: this.userId,
+        fileId: id
       }
-      let res = await this.deleteTranshFile(body)
+      const res = await this.deleteTranshFile(body)
       console.log('处理删除')
     }
   }

@@ -33,7 +33,7 @@ export default {
       form: {
         fileName: ''
       },
-      userId:localStorage.getItem('userId')
+      userId: localStorage.getItem('userId')
     }
   },
   methods: {
@@ -43,7 +43,7 @@ export default {
       const fileName = file.name
       const form = new FormData()
       form.append('file', file)
-      form.append('userId',this.userId)
+      form.append('userId', this.userId)
       this.uploadFile(form).then(rs => {
         console.log(rs)
       })

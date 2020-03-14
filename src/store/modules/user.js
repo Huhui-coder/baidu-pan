@@ -36,7 +36,7 @@ const actions = {
           // commit('SET_TOKEN', data.token)
           // setToken(data.token)
           resolve(Object.assign({ status: true }, res))
-          localStorage.setItem('userId',res.data.data.id)
+          localStorage.setItem('userId', res.data.data.id)
         } else {
           resolve({ status: false })
         }
@@ -45,7 +45,7 @@ const actions = {
       })
     })
   },
-  logout(){},
+  logout() {},
 
   // remove token
   resetToken({ commit }) {

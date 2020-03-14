@@ -58,17 +58,17 @@ const module = {
         }, { root: true })
       }
     },
-     // 恢复文件
-     async callbackTranshFile({ state, commit }, body) {
-        const res = await axios.post(`/fileTrash/restoreFileByFileId`, body)
-        commit('updateFile', res.data)
-        if (!res.data) {
-          commit('$message', {
-            message: '文件删除失败',
-            type: 'error'
-          }, { root: true })
-        }
-      },
+    // 恢复文件
+    async callbackTranshFile({ state, commit }, body) {
+      const res = await axios.post(`/fileTrash/restoreFileByFileId`, body)
+      commit('updateFile', res.data)
+      if (!res.data) {
+        commit('$message', {
+          message: '文件删除失败',
+          type: 'error'
+        }, { root: true })
+      }
+    }
   }
 }
 
