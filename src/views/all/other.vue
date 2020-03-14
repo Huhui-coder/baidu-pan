@@ -19,15 +19,15 @@
       >
         <el-table-column type="selection" width="55" />
         <el-table-column label="文件名" width="495">
-          <template slot-scope="scope">{{ scope.$index }}</template>
+          <template slot-scope="scope">{{ scope.row.fileName }}</template>
         </el-table-column>
         <el-table-column label="大小">
           <template slot-scope="scope">
-            <span>{{ scope.row.author }}</span>
+            <span>{{ scope.row.fileSize }}</span>
           </template>
         </el-table-column>
         <el-table-column label="修改日期">
-          <template slot-scope="scope">{{ scope.row.pageviews }}</template>
+          <template slot-scope="scope">{{ scope.row.createTime }}</template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -36,8 +36,8 @@
               size="mini"
               @click="action(scope.$index, scope.row)"
             >播放</el-button>
-            <el-button size="mini" @click="handleDowload(scope.$index, scope.row)">下载</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            <el-button size="mini" @click="handleDowload(scope.row.id)">下载</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -51,6 +51,9 @@
 import tabList from '@/components/tabList/index'
 import videoModel from '@/components/modal/video'
 import musicModel from '@/components/modal/music'
+import { mapActions, mapState } from 'vuex'
+import { downLoadFile} from '@/utils/index'
+
 
 export default {
   components: { tabList, videoModel, musicModel },
@@ -67,14 +70,15 @@ export default {
   },
   data() {
     return {
-      list: null,
+      list: [],
       listLoading: true,
       multipleSelection: [],
       name: '',
       video_url: '',
       music_url: '',
       showVideoModel: false,
-      showMusicModel: false
+      showMusicModel: false,
+      userId:localStorage.getItem('userId')
     }
   },
   computed: {
@@ -90,12 +94,18 @@ export default {
     this.fetch()
   },
   methods: {
-    fetchData() {
+    ...mapActions('file', ['featchFileList','downFile','deleteFile']),
+
+    async fetchData() {
       this.listLoading = true
-      // getList().then(response => {
-      //   this.list = response.data.items
-      //   this.listLoading = false
-      // })
+      let body = {
+        userId:this.userId,
+        parentId:0
+      }
+      let res = await this.featchFileList(body)
+      console.log(res.data.data)
+      this.list = res.data.data
+      this.listLoading = false
     },
     fetch() {
       const mapper = {
@@ -121,10 +131,22 @@ export default {
       console.log(val)
       this.multipleSelection = val
     },
-    handleDowload() {
-      console.log('处理下载')
+   async  handleDowload(id) {
+      // let body = {
+      //   userId:this.userId,
+      //   fileId:id
+      // }
+      // // /file/downLoadFileDetail/{userId}/{fileId}
+      // let res = await this.downFile(body)
+      // downLoadFile('ssss',res)
+      window.location.href = `http://192.168.0.105:8080/upload-demo/file/downLoadFileDetail/${this.userId}/${id}`
     },
-    handleDelete() {
+    async handleDelete(id) {
+      let body = {
+        userId:this.userId,
+        fileId:id
+      }
+      let res = await this.deleteFile(body)
       console.log('处理删除')
     }
   }

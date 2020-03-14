@@ -58,9 +58,9 @@ export const constantRoutes = [
   },
 
   {
-    path: '/example',
+    path: '/file',
     component: Layout,
-    redirect: '/example/table',
+    redirect: '/file/all',
     name: 'Example',
     meta: { title: '资源', icon: 'example' },
     children: [
@@ -104,14 +104,14 @@ export const constantRoutes = [
   },
 
   {
-    path: '/form',
+    path: '/trash',
     component: Layout,
     children: [
       {
-        path: 'index',
-        name: 'Form',
+        path: 'list',
+        name: 'trash',
         component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        meta: { title: '回收站', icon: 'form' }
       }
     ]
   },

@@ -25,9 +25,8 @@ const module = {
     async uploadFile({ state, commit }, file) {
       try {
         const res = await axios
-          .post(`/file/saveFile`, file, {
-            timeout: 120000,
-            'Content-Type': 'multipart/form-data'
+          .post(`/file/uploadFile`, file, {
+            timeout: 120000
           })
         commit('updateFile', res.data)
         if (state.showMsg) {
@@ -37,10 +36,30 @@ const module = {
           }, { root: true })
         }
         return res
-      }
-      catch (err) {
+      } catch (err) {
         commit('$message', {
           message: '文件上传失败',
+          type: 'error'
+        }, { root: true })
+        throw err
+      }
+    },
+    // 查询文件列表
+    async featchFileList({ state, commit }, body) {
+      try {
+        const res = await axios
+          .post(`/file/queryAllFileDetail`, body)
+        commit('updateFile', res.data)
+        if (state.showMsg) {
+          commit('$message', {
+            message: '文件查询成功',
+            type: 'success'
+          }, { root: true })
+        }
+        return res
+      } catch (err) {
+        commit('$message', {
+          message: '文件查询失败',
           type: 'error'
         }, { root: true })
         throw err
@@ -51,9 +70,29 @@ const module = {
       const res = await axios.put(`/files/${id}`, file)
       commit('updateFile', res.data)
     },
-
+    // 下载文件   /file/downLoadFileDetail
+    async downFile({ state, commit }, body) {
+      try {
+        const res = await axios
+          .get(`/file/downLoadFileDetail/${body.userId}/${body.fileId}`,)
+        commit('updateFile', res.data)
+        if (state.showMsg) {
+          commit('$message', {
+            message: '文件下载成功',
+            type: 'success'
+          }, { root: true })
+        }
+        return res
+      } catch (err) {
+        commit('$message', {
+          message: '文件下载失败',
+          type: 'error'
+        }, { root: true })
+        throw err
+      }
+    },
     // 删除文件
-    async deleteFile({ state, commit }, body) { 
+    async deleteFile({ state, commit }, body) {
       const res = await axios.post(`/file/delFileById`, body)
       commit('updateFile', res.data)
       if (!res.data) {
@@ -64,7 +103,7 @@ const module = {
       }
     },
     // 查询文件列表文件
-    async queryAllFile({ state, commit }, body) { 
+    async queryAllFile({ state, commit }, body) {
       const res = await axios.post(`/file/queryAllFileDetail`, body)
       commit('updateFile', res.data)
       if (!res.data) {
@@ -75,7 +114,7 @@ const module = {
       }
     },
     // 查询文件类型文件
-    async queryFileType({ state, commit }, params) { 
+    async queryFileType({ state, commit }, params) {
       const res = await axios.get(`/file/queryAllFileDetail`, params)
       commit('updateFile', res.data)
       if (!res.data) {

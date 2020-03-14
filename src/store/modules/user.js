@@ -1,7 +1,7 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import axios from '@/utils/axios'
 
-import { resetRouter } from '@/router'
+// import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
   return {
@@ -29,14 +29,14 @@ const mutations = {
 }
 
 const actions = {
-  login ({ state, commit }, data) {
-    const { form } = data
+  login({ state, commit }, data) {
     return new Promise((resolve, reject) => {
-      axios.post('/login/userLogin', form).then(res => {
+      axios.post('/user/loginUser', data).then(res => {
         if (res.status === 200) {
-          commit('SET_TOKEN', data.token)
-          setToken(data.token)
-          resolve(Object.assign({ status: true }, res.data.data))
+          // commit('SET_TOKEN', data.token)
+          // setToken(data.token)
+          resolve(Object.assign({ status: true }, res))
+          localStorage.setItem('userId',res.data.data.id)
         } else {
           resolve({ status: false })
         }
@@ -45,41 +45,7 @@ const actions = {
       })
     })
   },
-
-  // get user info
-  getInfo({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
-        const { data } = response
-
-        if (!data) {
-          reject('Verification failed, please Login again.')
-        }
-
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
-        commit('SET_AVATAR', avatar)
-        resolve(data)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
-
-  // user logout
-  logout({ commit, state }) {
-    return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  },
+  logout(){},
 
   // remove token
   resetToken({ commit }) {

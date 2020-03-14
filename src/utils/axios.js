@@ -6,7 +6,7 @@ window.$notify = Notification
 const instance = axios.create({
   timeout: 10000,
   headers: {},
-  baseURL: `192.168.0.101:8080/upload-demo`,
+  baseURL: `http://192.168.0.105:8080/upload-demo`,
   validateStatus: () => {
     return true
   }

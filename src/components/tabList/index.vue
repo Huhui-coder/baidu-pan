@@ -25,19 +25,25 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
+
 export default {
   data() {
     return {
       form: {
         fileName: ''
-      }
+      },
+      userId:localStorage.getItem('userId')
     }
   },
   methods: {
+    ...mapActions('file', ['uploadFile']),
+
     handleUpload(file) {
-    //   const fileName = file.name
+      const fileName = file.name
       const form = new FormData()
       form.append('file', file)
+      form.append('userId',this.userId)
       this.uploadFile(form).then(rs => {
         console.log(rs)
       })
