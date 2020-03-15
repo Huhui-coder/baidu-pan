@@ -30,165 +30,175 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
-export const constantRoutes = [
-  {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
-  },
+export const constantRoutes = [{
+  path: '/login',
+  component: () =>
+            import ('@/views/login/index'),
+  hidden: true
+},
+{
+  path: '/register',
+  component: () =>
+            import ('@/views/register/index'),
+  hidden: true
+},
 
-  {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
-  },
+{
+  path: '/404',
+  component: () =>
+            import ('@/views/404'),
+  hidden: true
+},
 
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    children: [
-      {
-        path: 'dashboard',
-        name: 'Dashboard',
-        component: () => import('@/views/dashboard/index'),
-        meta: { title: '广场', icon: 'dashboard' }
-      }
-    ]
-  },
+{
+  path: '/',
+  component: Layout,
+  redirect: '/dashboard',
+  children: [{
+    path: 'dashboard',
+    name: 'Dashboard',
+    component: () =>
+                import ('@/views/dashboard/index'),
+    meta: { title: '广场', icon: 'dashboard' }
+  }]
+},
 
-  {
-    path: '/file',
-    component: Layout,
-    redirect: '/file/all',
-    name: 'Example',
-    meta: { title: '资源', icon: 'example' },
-    children: [
-      {
-        path: 'all',
-        name: 'all',
-        component: () => import('@/views/all/other'),
-        meta: { title: '全部文件', icon: 'table', type: 'all' }
-      },
-      {
-        path: 'image',
-        name: 'image',
-        component: () => import('@/views/all/image'),
-        meta: { title: '图片', icon: 'table', type: 'image' }
-      },
-      {
-        path: 'document',
-        name: 'document',
-        component: () => import('@/views/all/other'),
-        meta: { title: '文档', icon: 'tree', type: 'document' }
-      },
-      {
-        path: 'video',
-        name: 'video',
-        component: () => import('@/views/all/other'),
-        meta: { title: '视频', icon: 'tree', type: 'video' }
-      },
-      {
-        path: 'music',
-        name: 'music',
-        component: () => import('@/views/all/other'),
-        meta: { title: '音乐', icon: 'tree', type: 'music' }
-      },
-      {
-        path: 'other',
-        name: 'other',
-        component: () => import('@/views/all/other'),
-        meta: { title: '其他', icon: 'tree', type: 'other' }
-      }
-    ]
+{
+  path: '/file',
+  component: Layout,
+  redirect: '/file/all',
+  name: 'Example',
+  meta: { title: '资源', icon: 'example' },
+  children: [{
+    path: 'all',
+    name: 'all',
+    component: () =>
+                    import ('@/views/all/other'),
+    meta: { title: '全部文件', icon: 'table', type: 'all' }
   },
-
   {
-    path: '/trash',
-    component: Layout,
-    children: [
-      {
-        path: 'list',
-        name: 'trash',
-        component: () => import('@/views/form/index'),
-        meta: { title: '回收站', icon: 'form' }
-      }
-    ]
+    path: 'image',
+    name: 'image',
+    component: () =>
+                    import ('@/views/all/image'),
+    meta: { title: '图片', icon: 'table', type: 'image', fileType: 1 }
   },
-
   {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () =>
-                  import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () =>
-                  import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
+    path: 'document',
+    name: 'document',
+    component: () =>
+                    import ('@/views/all/other'),
+    meta: { title: '文档', icon: 'tree', type: 'document', fileType: 2 }
   },
-
   {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
+    path: 'video',
+    name: 'video',
+    component: () =>
+                    import ('@/views/all/other'),
+    meta: { title: '视频', icon: 'tree', type: 'video', fileType: 3 }
   },
+  {
+    path: 'music',
+    name: 'music',
+    component: () =>
+                    import ('@/views/all/other'),
+    meta: { title: '音乐', icon: 'tree', type: 'music', fileType: 4 }
+  },
+  {
+    path: 'other',
+    name: 'other',
+    component: () =>
+                    import ('@/views/all/other'),
+    meta: { title: '其他', icon: 'tree', type: 'other', fileType: 5 }
+  }
+  ]
+},
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+{
+  path: '/trash',
+  component: Layout,
+  children: [{
+    path: 'list',
+    name: 'trash',
+    component: () =>
+                import ('@/views/form/index'),
+    meta: { title: '回收站', icon: 'form' }
+  }]
+},
+
+// {
+//   path: '/nested',
+//   component: Layout,
+//   redirect: '/nested/menu1',
+//   name: 'Nested',
+//   meta: {
+//     title: 'Nested',
+//     icon: 'nested'
+//   },
+//   children: [{
+//     path: 'menu1',
+//     component: () =>
+//                     import ('@/views/nested/menu1/index'), // Parent router-view
+//     name: 'Menu1',
+//     meta: { title: 'Menu1' },
+//     children: [{
+//       path: 'menu1-1',
+//       component: () =>
+//                             import ('@/views/nested/menu1/menu1-1'),
+//       name: 'Menu1-1',
+//       meta: { title: 'Menu1-1' }
+//     },
+//     {
+//       path: 'menu1-2',
+//       component: () =>
+//                             import ('@/views/nested/menu1/menu1-2'),
+//       name: 'Menu1-2',
+//       meta: { title: 'Menu1-2' },
+//       children: [{
+//         path: 'menu1-2-1',
+//         component: () =>
+//                                     import ('@/views/nested/menu1/menu1-2/menu1-2-1'),
+//         name: 'Menu1-2-1',
+//         meta: { title: 'Menu1-2-1' }
+//       },
+//       {
+//         path: 'menu1-2-2',
+//         component: () =>
+//                                     import ('@/views/nested/menu1/menu1-2/menu1-2-2'),
+//         name: 'Menu1-2-2',
+//         meta: { title: 'Menu1-2-2' }
+//       }
+//       ]
+//     },
+//     {
+//       path: 'menu1-3',
+//       component: () =>
+//                             import ('@/views/nested/menu1/menu1-3'),
+//       name: 'Menu1-3',
+//       meta: { title: 'Menu1-3' }
+//     }
+//     ]
+//   },
+//   {
+//     path: 'menu2',
+//     component: () =>
+//                     import ('@/views/nested/menu2/index'),
+//     meta: { title: 'menu2' }
+//   }
+//   ]
+// },
+
+// {
+//   path: 'external-link',
+//   component: Layout,
+//   children: [{
+//     path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+//     meta: { title: 'External Link', icon: 'link' }
+//   }]
+// },
+
+// 404 page must be placed at the end !!!
+{ path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () =>

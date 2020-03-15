@@ -1,13 +1,12 @@
 <template>
   <div>
-    <tab-list />
+    <tab-list @file-upload="fileUpload" @file-search="fileSearch" />
     <div class="app-container">
       <div class="total">
         <div>全部{{ name }}</div>
         <div>已加载{{ type }}</div>
       </div>
       <el-table
-        ref="multipleTable"
         :key="key"
         v-loading="listLoading"
         :data="list"
@@ -17,7 +16,6 @@
         highlight-current-row
         @selection-change="handleSelectionChange"
       >
-        <el-table-column type="selection" width="55" />
         <el-table-column label="文件名" width="495">
           <template slot-scope="scope">{{ scope.row.fileName }}</template>
         </el-table-column>
@@ -31,11 +29,11 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
+            <!-- <el-button
               v-if="type == 'music' || type == 'video'"
               size="mini"
               @click="action(scope.$index, scope.row)"
-            >播放</el-button>
+            >播放</el-button>-->
             <el-button size="mini" @click="handleDowload(scope.row.id)">下载</el-button>
             <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
@@ -84,22 +82,33 @@ export default {
     type() {
       return this.$route.meta.type
     },
+    fileType() {
+      return this.$route.meta.fileType
+    },
     key() {
       return +new Date()
     }
   },
-  created() {
+  created() {},
+  mounted() {
     this.fetchData()
     this.fetch()
   },
   methods: {
-    ...mapActions('file', ['featchFileList', 'downFile', 'deleteFile']),
-
-    async fetchData() {
+    ...mapActions('file', [
+      'featchFileList',
+      'downFile',
+      'deleteFile',
+      'fileTypeApi'
+    ]),
+    async fetchData(fileName = '') {
       this.listLoading = true
+
       const body = {
         userId: this.userId,
-        parentId: 0
+        parentId: 0,
+        fileTypeId: this.fileType,
+        fileName: fileName
       }
       const res = await this.featchFileList(body)
       console.log(res.data.data)
@@ -118,9 +127,38 @@ export default {
       this.name = mapper[this.$route.meta.type]
       console.log(this.$route.meta.type)
     },
-    action() {
+    async fileUpload(type) {
+      console.log('fileUpload')
+      const mapper = {
+        image: 1,
+        document: 2,
+        video: 3,
+        music: 4,
+        other: 5
+      }
+      this.listLoading = true
+
+      const body = {
+        userId: this.userId,
+        parentId: 0,
+        fileTypeId: mapper[type],
+        fileName: ''
+      }
+      const res = await this.featchFileList(body)
+      this.list = res.data.data
+      this.listLoading = false
+    }, // 文件上传完毕后，本页面列表刷新
+    fileSearch(name) {
+      // 关键字搜索
+      console.log(name)
+      this.fetchData(name)
+    },
+    action(i, n) {
+      console.log(i, n)
       if (this.$route.meta.type === 'music') {
         this.showMusicModel = true
+        // video_url
+        this.music_url = n.filePath
       } else {
         this.showVideoModel = true
       }
@@ -130,7 +168,7 @@ export default {
       console.log(val)
       this.multipleSelection = val
     },
-    async  handleDowload(id) {
+    async handleDowload(id) {
       // let body = {
       //   userId:this.userId,
       //   fileId:id
@@ -138,6 +176,7 @@ export default {
       // // /file/downLoadFileDetail/{userId}/{fileId}
       // let res = await this.downFile(body)
       // downLoadFile('ssss',res)
+
       window.location.href = `http://192.168.0.105:8080/upload-demo/file/downLoadFileDetail/${this.userId}/${id}`
     },
     async handleDelete(id) {
@@ -146,6 +185,8 @@ export default {
         fileId: id
       }
       const res = await this.deleteFile(body)
+      this.fetchData()
+
       console.log('处理删除')
     }
   }

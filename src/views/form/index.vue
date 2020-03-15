@@ -36,8 +36,8 @@
               size="mini"
               @click="action(scope.$index, scope.row)"
             >播放</el-button>
-            <el-button size="mini" @click="handleCallback(scope.row.fileId)">恢复</el-button>
-            <el-button size="mini" type="danger" @click="handleDelete(scope.row.fileId)">删除</el-button>
+            <el-button size="mini" @click="handleCallback(scope.row.id)">恢复</el-button>
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -136,6 +136,7 @@ export default {
         fileId: id
       }
       const res = await this.callbackTranshFile(body)
+      this.fetchData()
       // window.location.href = `http://192.168.0.105:8080/upload-demo/file/downLoadFileDetail/${this.userId}/${id}`
     },
     async handleDelete(id) {
@@ -144,6 +145,7 @@ export default {
         fileId: id
       }
       const res = await this.deleteTranshFile(body)
+      this.fetchData()
       console.log('处理删除')
     }
   }

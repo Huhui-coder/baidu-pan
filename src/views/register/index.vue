@@ -20,7 +20,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">登录</h3>
+        <h3 class="title">注册</h3>
       </div>
 
       <el-form-item prop="username">
@@ -51,7 +51,7 @@
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleRegister"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
@@ -62,18 +62,11 @@
         :loading="loading"
         type="primary"
         style="width:100%;margin-bottom:30px;"
-        @click.native.prevent="handleLogin"
-      >登录</el-button>
+        @click.native.prevent="handleRegister"
+      >注册</el-button>
 
       <div class="tips">
-        <!-- <span style="margin-right:20px;">username: admin</span>
-        <span>password: any</span>-->
-        <el-button
-          :loading="loading"
-          type="primary"
-          style="width:100%;margin-bottom:30px;"
-          @click="$router.push('/register')"
-        >注册</el-button>
+        <router-link to="/login">登录</router-link>
       </div>
     </el-form>
   </div>
@@ -107,7 +100,7 @@ export default {
           'https://ccdn.goodq.top/caches/927a729d326a897a6e2f27a03c31ee07/aHR0cDovLzU3ZThlY2Y0MTE1NWQudDczLnFpZmVpeWUuY29tL3FmeS1jb250ZW50L3VwbG9hZHMvMjAxNy8wNi85OGIyZTYyYzgwOGRkNTdkMDA0MTUxNWVkNjk0NDg5YS5tcDQ_p_p100_p_3D.mp4'
       },
       loginForm: {
-        username: 'hihii',
+        username: 'huhui',
         password: '123456'
       },
       loginRules: {
@@ -120,7 +113,7 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: '/file/all'
+      redirect: undefined
     }
   },
   watch: {
@@ -132,7 +125,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('user', ['login']),
+    ...mapActions('user', ['register']),
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -143,28 +136,14 @@ export default {
         this.$refs.password.focus()
       })
     },
-    async handleLogin() {
-      if (
-        this.loginForm.username.length < 2 ||
-        this.loginForm.password.length < 6
-      ) {
-        return false
-      } else {
-        const body = {
-          userName: this.loginForm.username,
-          userPwd: this.loginForm.password
-        }
-        const res = await this.login(body)
-        console.log(res)
-        if (res.data.code === 200) {
-          this.$router.push({ path: this.redirect || '/' })
-        } else {
-          this.$message({
-            message: '密码错误',
-            type: 'warning'
-          })
-        }
+    async handleRegister() {
+      const body = {
+        userName: this.loginForm.username,
+        userPwd: this.loginForm.password
       }
+      const res = await this.register(body)
+      console.log(res)
+      this.$router.push({ path: '/login' })
     }
   }
 }

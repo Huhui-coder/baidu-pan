@@ -56,6 +56,11 @@ const module = {
           message: '文件删除失败',
           type: 'error'
         }, { root: true })
+      } else {
+        commit('$message', {
+          message: '文件删除成功',
+          type: 'success'
+        }, { root: true })
       }
     },
     // 恢复文件
@@ -66,6 +71,11 @@ const module = {
         commit('$message', {
           message: '文件删除失败',
           type: 'error'
+        }, { root: true })
+      } else {
+        commit('$message', {
+          message: '文件恢复成功',
+          type: 'success'
         }, { root: true })
       }
     }

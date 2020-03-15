@@ -5,9 +5,9 @@
       <div class="line-title clearfix">
         <span style="padding-right: 10px">时间:</span>
         <el-radio-group v-model="time" size="small" @change="handleTimeChange">
-          <el-radio-button :label="'day'">上传</el-radio-button>
-          <el-radio-button :label="'week'">下载</el-radio-button>
-          <el-radio-button :label="'month'">分享</el-radio-button>
+          <el-radio-button :label="'1'">上传</el-radio-button>
+          <el-radio-button :label="'2'">下载</el-radio-button>
+          <el-radio-button :label="'3'">删除</el-radio-button>
         </el-radio-group>
       </div>
     </div>
@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     handleTimeChange(val) {
-      this.$emit('handleTimeChange', { date: val, type: this.type })
+      this.$emit('handleTimeChange', { type: val })
     },
     getOption(val) {
       const names = Object.keys(val.data || {})
@@ -94,7 +94,7 @@ export default {
                 width: 6px;
                 height: 6px;
                 border-radius: 50%;
-                border: 2px solid rgba(9, 155, 255,1);"></i>用户数：${params[0].value}<br>`
+                border: 2px solid rgba(9, 155, 255,1);"></i>数量：${params[0].value}<br>`
           }
         },
         grid: {

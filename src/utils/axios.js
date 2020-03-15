@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { Notification } from 'element-ui'
+import config from './config'
 
 window.$notify = Notification
 
 const instance = axios.create({
   timeout: 10000,
   headers: {},
-  baseURL: `http://192.168.0.105:8080/upload-demo`,
+  baseURL: config.baseUrl,
   validateStatus: () => {
     return true
   }

@@ -47,10 +47,12 @@ export default {
       this.uploadFile(form).then(rs => {
         console.log(rs)
       })
+      this.$emit('file-upload', window.location.hash.split('/')[2])
       return false
     },
     onSearch() {
       console.log('search')
+      this.$emit('file-search', this.form.fileName)
     }
   }
 }

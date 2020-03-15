@@ -45,7 +45,24 @@ const actions = {
       })
     })
   },
-  logout() {},
+  register({ state, commit }, data) {
+    return new Promise((resolve, reject) => {
+      axios.post('/user/registerUser', data).then(res => {
+        if (res.status === 200) {
+          // commit('SET_TOKEN', data.token)
+          // setToken(data.token)
+        } else {
+          resolve({ status: false })
+        }
+        return res
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  logout() {
+    localStorage.removeItem('userId')
+  },
 
   // remove token
   resetToken({ commit }) {
@@ -53,6 +70,18 @@ const actions = {
       removeToken() // must remove  token  first
       commit('RESET_STATE')
       resolve()
+    })
+  },
+
+  // 获取统计的数据
+  fetchAnaly({ state, commit }, data) {
+    return new Promise((resolve, reject) => {
+      axios.post('/user/queryUserOperaInfoByUserId', data).then(res => {
+        resolve(res)
+        return res
+      }).catch(err => {
+        reject(err)
+      })
     })
   }
 }
@@ -63,4 +92,3 @@ export default {
   mutations,
   actions
 }
-

@@ -100,6 +100,11 @@ const module = {
           message: '文件删除失败',
           type: 'error'
         }, { root: true })
+      } else {
+        commit('$message', {
+          message: '文件删除成功，可在回收站进行查看',
+          type: 'success'
+        }, { root: true })
       }
     },
     // 查询文件列表文件
@@ -110,6 +115,11 @@ const module = {
         commit('$message', {
           message: '文件查询失败',
           type: 'error'
+        }, { root: true })
+      } else {
+        commit('$message', {
+          message: '文件查询成功',
+          type: 'success'
         }, { root: true })
       }
     },
@@ -122,7 +132,29 @@ const module = {
           message: '文件查询失败',
           type: 'error'
         }, { root: true })
+      } else {
+        commit('$message', {
+          message: '文件查询成功',
+          type: 'success'
+        }, { root: true })
       }
+    },
+    // 查询当前已知的文件类型
+    async fileTypeApi({ state, commit }, params) {
+      const res = await axios.get(`/file/getFileType`, params)
+      commit('updateFile', res.data)
+      if (!res.data) {
+        commit('$message', {
+          message: '文件查询失败',
+          type: 'error'
+        }, { root: true })
+      } else {
+        commit('$message', {
+          message: '文件查询成功',
+          type: 'success'
+        }, { root: true })
+      }
+      return res
     }
   }
 }
